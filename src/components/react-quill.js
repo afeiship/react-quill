@@ -32,7 +32,7 @@ export default class extends Component {
   }
 
   componentDidMount() {
-    const { value, y } = this.props;
+    const { value, options } = this.props;
     this.quill = new Quill(this.root, options);
     this.quill.on('editor-change', this._onEditorChange);
     this.html = value;
