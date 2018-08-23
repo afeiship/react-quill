@@ -18,10 +18,14 @@ class App extends React.Component{
     window.rc = this.refs.rc;
   }
 
+  _onChange = e =>{
+    console.log(e.target.value);
+  };
+
   render(){
     return (
       <div className="hello-react-quill">
-        <ReactQuill ref='rc' />
+        <ReactQuill onChange={this._onChange} ref='rc' />
       </div>
     );
   }

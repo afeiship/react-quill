@@ -14,6 +14,7 @@ var externals = process.env.NODE_ENV === 'production' ? {
   'react': 'react',
   'classnames': 'classnames',
   'react-dom': 'react-dom',
+  'quill':'quill',
   'noop':'noop',
   'mixin-decorator': 'mixin-decorator',
   'object-assign':'object-assign',
@@ -35,6 +36,7 @@ module.exports = {
     alias: {
       React: path.resolve(__dirname, '../node_modules/react'),
       ReactDOM: path.resolve(__dirname, '../node_modules/react-dom'),
+      'node_modules': path.resolve(__dirname, '../node_modules'),
       'src': path.resolve(__dirname, '../src'),
       'assets': path.resolve(__dirname, '../src/assets'),
       'mixins': path.resolve(__dirname, '../src/components'),

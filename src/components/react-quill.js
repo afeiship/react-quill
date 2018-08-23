@@ -10,26 +10,30 @@ export default class extends Component {
   /*===properties start===*/
   static propTypes = {
     className: PropTypes.string,
+    value: PropTypes.string,
+    onChange: PropTypes.func,
     options: PropTypes.object,
   };
 
   static defaultProps = {
+    onChange: noop,
     options: {
       theme: 'snow'
     }
   };
   /*===properties end===*/
 
-  constructor(inProps) {
-    super(inProps);
-    this.state = {
-    };
-  }
-
   componentDidMount() {
     const { options } = this.props;
-    this.instance = new Quill(this.root, options);
+    this.quill = new Quill(this.root, options);
+    this.quill.on('editor-change', this._onEditorChange);
   }
+
+  _onEditorChange = () => {
+    const { onChange } = this.props;
+    const value = this.quill.container.firstChild.innerHTML;
+    onChange({ target: { quill: this.quill, value } });
+  };
 
   render() {
     const { className, ...props } = this.props;
