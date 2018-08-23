@@ -28,3 +28,5 @@ $react-quill-options:(
 ```jsx
 BACKUP_USAGE
 ```
+## resources:
++ https://quilljs.com/docs/configuration/

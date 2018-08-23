@@ -70,3 +70,5 @@ class App extends React.Component{
 }
 
 ```
+## resources:
++ https://quilljs.com/docs/configuration/
