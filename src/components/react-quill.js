@@ -23,16 +23,29 @@ export default class extends Component {
   };
   /*===properties end===*/
 
+  set html(inValue) {
+    this.quill.container.firstChild.innerHTML = inValue;
+  }
+
+  get html() {
+    return this.quill.container.firstChild.innerHTML;
+  }
+
   componentDidMount() {
-    const { options } = this.props;
+    const { value, y } = this.props;
     this.quill = new Quill(this.root, options);
     this.quill.on('editor-change', this._onEditorChange);
+    this.html = value;
+  }
+
+  componentWillUnmount() {
+    this.quill.off('editor-change', this._onEditorChange);
+    this.quill = null;
   }
 
   _onEditorChange = () => {
     const { onChange } = this.props;
-    const value = this.quill.container.firstChild.innerHTML;
-    onChange({ target: { quill: this.quill, value } });
+    onChange({ target: { quill: this.quill, value: this.html } });
   };
 
   render() {

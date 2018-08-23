@@ -46,7 +46,7 @@ $react-quill-options:(
 
 class App extends React.Component{
   state = {
-
+    value: '<p><strong><u>html!!!d</u></strong></p><p><strong><u>sdflkjsdfl</u></strong></p><p><strong><u>asdjfsf</u></strong></p>'
   };
 
   constructor(props){
@@ -58,12 +58,15 @@ class App extends React.Component{
 
   _onChange = e =>{
     console.log(e.target.value);
+    this.setState({
+      value: e.target.value
+    })
   };
 
   render(){
     return (
       <div className="hello-react-quill">
-        <ReactQuill onChange={this._onChange} ref='rc' />
+        <ReactQuill value={this.state.value} onChange={this._onChange} ref='rc' />
       </div>
     );
   }
