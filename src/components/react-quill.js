@@ -38,6 +38,13 @@ export default class extends Component {
     this.html = value;
   }
 
+  componentWillReceiveProps(inProps){
+    const { value } = inProps;
+    if( value !== this.html ){
+      this.html = value;
+    }
+  }
+
   componentWillUnmount() {
     this.quill.off('editor-change', this._onEditorChange);
     this.quill = null;
