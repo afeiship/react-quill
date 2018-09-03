@@ -3,6 +3,29 @@ $react-quill-options:(
 )!default;
 
 @import 'node_modules/quill/dist/quill.snow';
+@import 'node_modules/react-textarea/dist/style.scss';
 
 .react-quill{
+  &-raw{
+    width: 100%;
+    border-color: #ccc;
+    border-top: none;
+    resize: vertical;
+  }
+
+  &-toolbar{
+    .ql-snow.ql-toolbar{
+      .ql-raw{
+        outline: none;
+        padding: 0 5px;
+        width: auto;
+      }
+
+      .ql-image-upload{
+        outline: none;
+        padding: 0 5px;
+        width: auto;
+      }
+    }
+  }
 }

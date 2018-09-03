@@ -5,6 +5,8 @@ import classNames from 'classnames';
 import noop from 'noop';
 import objectAssign from 'object-assign';
 import Quill from 'quill';
+import { html } from 'js-beautify';
+import ReactTextarea from 'react-textarea';
 
 export default class extends Component {
   /*===properties start===*/
@@ -23,12 +25,26 @@ export default class extends Component {
   };
   /*===properties end===*/
 
+  constructor(inProps) {
+    super(inProps);
+    const { value } = inProps;
+    this.state = {
+      value,
+      rawActive: false
+    };
+  }
+
   set html(inValue) {
     this.quill.container.firstChild.innerHTML = inValue;
   }
 
   get html() {
-    return this.quill.container.firstChild.innerHTML;
+    return this.quill && html(this.quill.container.firstChild.innerHTML, { indent_size: 2 });
+  }
+
+  get rawText() {
+    const { rawActive } = this.state;
+    return rawActive ? '预览' : '源码'
   }
 
   componentDidMount() {
@@ -41,8 +57,8 @@ export default class extends Component {
 
   componentWillReceiveProps(inProps) {
     const { value } = inProps;
-    if (value !== this.html) {
-      this.html = value;
+    if (value !== this.state.value) {
+      this.setState({ value });
     }
   }
 
@@ -51,15 +67,37 @@ export default class extends Component {
     this.quill = null;
   }
 
-  _onEditorChange = () => {
+  change(inValue) {
     const { onChange } = this.props;
-    onChange({ target: { quill: this.quill, value: this.html } });
+    this.setState({ value: inValue }, () => {
+      onChange({ target: { quill: this.quill, value: this.html } });
+    });
+  }
+
+  _onEditorChange = (inEvent) => {
+    const { rawActive } = this.state;
+    if (!rawActive) {
+      this.change(this.html);
+    }
+  };
+
+  _onRawChange = inEvent => {
+    const { value } = inEvent.target;
+    this.html = value;
+    this.change(value);
+  };
+
+  _toggleActive = () => {
+    const { rawActive } = this.state;
+    this.setState({ rawActive: !rawActive });
   };
 
   render() {
-    const { className, ...props } = this.props;
+    const { className, options, value, ...props } = this.props;
+    const { rawActive } = this.state;
+    console.log('render...');
     return (
-      <Fragment>
+      <section className="react-quill-toolbar">
         <div ref={(toolbar) => this.toolbar = toolbar}>
           <span className="ql-formats">
             <select className="ql-font"></select>
@@ -72,41 +110,24 @@ export default class extends Component {
             <button className="ql-strike"></button>
           </span>
           <span className="ql-formats">
+            <select className="ql-align"></select>
             <select className="ql-color"></select>
             <select className="ql-background"></select>
           </span>
           <span className="ql-formats">
-            <button className="ql-script" value="sub"></button>
-            <button className="ql-script" value="super"></button>
-          </span>
-          <span className="ql-formats">
-            <button className="ql-header" value="1"></button>
-            <button className="ql-header" value="2"></button>
             <button className="ql-blockquote"></button>
-            <button className="ql-code-block"></button>
-          </span>
-          <span className="ql-formats">
             <button className="ql-list" value="ordered"></button>
             <button className="ql-list" value="bullet"></button>
-            <button className="ql-indent" value="-1"></button>
-            <button className="ql-indent" value="+1"></button>
-          </span>
-          <span className="ql-formats">
-            <button className="ql-direction" value="rtl"></button>
-            <select className="ql-align"></select>
           </span>
           <span className="ql-formats">
             <button className="ql-link"></button>
             <button className="ql-image"></button>
-            <button className="ql-video"></button>
-            <button className="ql-formula"></button>
-          </span>
-          <span className="ql-formats">
-            <button className="ql-clean"></button>
+            <button onClick={this._toggleActive} className={'ql-raw'}>{this.rawText}</button>
           </span>
         </div>
-        <section ref={(container) => this.container = container} className={classNames('react-quill', className)} {...props} />
-      </Fragment>
+        <section hidden={rawActive} ref={(container) => this.container = container} className={classNames('react-quill', className)} {...props} />
+        { rawActive && <ReactTextarea className={'ql-editor react-quill-raw'} value={this.state.value} onChange={this._onRawChange} /> }
+      </section>
     );
   }
 }
