@@ -7,6 +7,12 @@ import objectAssign from 'object-assign';
 import Quill from 'quill';
 import { html } from 'js-beautify';
 import ReactTextarea from 'react-textarea';
+import QuillImageUploader from 'quill-image-uploader';
+
+
+// import modules:
+Quill.register('modules/image-uploader', QuillImageUploader);
+
 
 export default class extends Component {
   /*===properties start===*/
@@ -14,11 +20,13 @@ export default class extends Component {
     className: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func,
+    onUpload: PropTypes.func,
     options: PropTypes.object,
   };
 
   static defaultProps = {
     onChange: noop,
+    onUpload: noop,
     options: {
       theme: 'snow'
     }
@@ -47,9 +55,21 @@ export default class extends Component {
     return rawActive ? '预览' : '源码'
   }
 
+  initOptions() {
+    const { options } = this.props;
+    objectAssign(options, {
+      modules: {
+        toolbar: this.toolbar,
+        'image-uploader': {
+          onChange: this._onImageUpload
+        }
+      }
+    });
+  }
+
   componentDidMount() {
     const { value, options } = this.props;
-    objectAssign(options, { modules: { toolbar: this.toolbar } });
+    this.initOptions();
     this.quill = new Quill(this.container, options);
     this.quill.on('editor-change', this._onEditorChange);
     this.html = value;
@@ -92,10 +112,15 @@ export default class extends Component {
     this.setState({ rawActive: !rawActive });
   };
 
+  _onImageUpload = (inEvent) => {
+    const { onUpload } = this.props;
+    console.log('event!', inEvent.target.value);
+  };
+
   render() {
-    const { className, options, value, ...props } = this.props;
+    const { className, options, value, onUpload, ...props } = this.props;
     const { rawActive } = this.state;
-    console.log('render...');
+
     return (
       <section className="react-quill-toolbar">
         <div ref={(toolbar) => this.toolbar = toolbar}>
@@ -122,11 +147,12 @@ export default class extends Component {
           <span className="ql-formats">
             <button className="ql-link"></button>
             <button className="ql-image"></button>
-            <button onClick={this._toggleActive} className={'ql-raw'}>{this.rawText}</button>
+            <button onClick={this._toggleActive} className={'react-quill-ql-raw'}>{this.rawText}</button>
           </span>
         </div>
         <section hidden={rawActive} ref={(container) => this.container = container} className={classNames('react-quill', className)} {...props} />
-        { rawActive && <ReactTextarea className={'ql-editor react-quill-raw'} value={this.state.value} onChange={this._onRawChange} /> }
+        {rawActive && <ReactTextarea className={'ql-editor react-quill-raw'} value={this.state.value} onChange={this._onRawChange} />}
+        <div id="container"></div>
       </section>
     );
   }
