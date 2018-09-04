@@ -8,11 +8,13 @@
     className: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func,
+    onUpload: PropTypes.func,
     options: PropTypes.object,
   };
 
   static defaultProps = {
     onChange: noop,
+    onUpload: noop,
     options: {
       theme: 'snow'
     }
@@ -57,10 +59,10 @@ class App extends React.Component{
   }
 
   _onChange = e =>{
-    console.log(e.target.value);
-    this.setState({
-      value: e.target.value
-    })
+    // console.log(e.target.value);
+    // this.setState({
+    //   value: e.target.value
+    // })
   };
 
   render(){
