@@ -114,7 +114,7 @@ export default class extends Component {
 
   _onImageUpload = (inEvent) => {
     const { onUpload } = this.props;
-    onUpload(inEvent);
+    return onUpload(inEvent);
   };
 
   render() {
