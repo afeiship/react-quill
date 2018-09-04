@@ -5,6 +5,7 @@ $react-quill-options:(
 @import 'node_modules/react-textarea/dist/style.scss';
 
 .react-quill{
+
   &-raw{
     width: 100%;
     border-color: #ccc;
@@ -25,6 +26,13 @@ $react-quill-options:(
         padding: 0 5px;
         width: auto;
       }
+    }
+  }
+
+  &.ql-container{
+    img{
+      max-width: 50%;
+      box-shadow: 0 0 0 5px rgba(#ccc,.6);
     }
   }
 }
