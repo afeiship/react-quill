@@ -78,6 +78,7 @@ export default class extends Component {
   componentWillReceiveProps(inProps) {
     const { value } = inProps;
     if (value !== this.state.value) {
+      this.html = value;
       this.setState({ value });
     }
   }
@@ -107,7 +108,8 @@ export default class extends Component {
     this.change(value);
   };
 
-  _toggleActive = () => {
+  _toggleActive = (inEvent) => {
+    inEvent.stopPropagation();
     const { rawActive } = this.state;
     this.setState({ rawActive: !rawActive });
   };
@@ -147,12 +149,11 @@ export default class extends Component {
           <span className="ql-formats">
             <button className="ql-link"></button>
             <button className="ql-image"></button>
-            <button onClick={this._toggleActive} className={'react-quill-ql-raw'}>{this.rawText}</button>
+            <button type="button" onClick={this._toggleActive} className={'react-quill-ql-raw'}>{this.rawText}</button>
           </span>
         </div>
         <section hidden={rawActive} ref={(container) => this.container = container} className={classNames('react-quill', className)} {...props} />
         {rawActive && <ReactTextarea className={'ql-editor react-quill-raw'} value={this.state.value} onChange={this._onRawChange} />}
-        <div id="container"></div>
       </section>
     );
   }
