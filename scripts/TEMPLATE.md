@@ -7,7 +7,7 @@
 
 ## installation
 ```shell
-pnpm add @jswork/react-quill
+pnpm add @jswork/react-quill quill
 ```
 
 ## usage
