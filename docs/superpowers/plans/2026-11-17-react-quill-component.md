@@ -468,10 +468,11 @@ Expected: 构建成功；检查产物：
 ls packages/lib/dist
 grep -c 'ql-snow' packages/lib/dist/style.css
 grep -c 'data-tag=blank' packages/lib/dist/style.css
-grep -c 'react-quill' packages/lib/dist/index.d.ts
+grep -c 'ReactQuill' packages/lib/dist/index.d.ts
+grep -c 'Quill.register\|data-tag' packages/lib/dist/index.mjs
 ```
 
-Expected: `dist/` 含 `index.mjs` / `index.cjs` / `index.d.ts` / `style.css`；三个 grep 计数均大于 0。
+Expected: `dist/` 含 `index.mjs` / `index.cjs` / `index.d.ts` / `style.css`；四个 grep 计数均大于 0（d.ts 中是类型名 `ReactQuill`，不是运行时字符串 `react-quill`；index.mjs 中 blank-blot 注册代码不得被 tree-shake）。
 
 - [ ] **Step 3: 启动 example 供浏览器预览**
 
