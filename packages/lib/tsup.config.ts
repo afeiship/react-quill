@@ -1,6 +1,5 @@
 import { readFileSync } from 'node:fs';
 import { defineConfig } from 'tsup';
-import lightningCssPlugin from '@jswork/tsup-plugin-lightningcss';
 
 const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
 
@@ -18,13 +17,6 @@ export default defineConfig({
   define: { __VERSION__: JSON.stringify(pkg.version) },
   footer: ({ format }) =>
     format === 'cjs' ? { js: 'module.exports = module.exports.default;' } : {},
-  esbuildPlugins: [
-    // CSS compiled with Lightning CSS in the same build (minify + targets + nesting)
-    lightningCssPlugin({
-      entry: 'src/style.css',
-      outFile: 'style.css',
-    }),
-  ],
   loader: {
     '.svg': 'dataurl',
   },

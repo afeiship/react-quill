@@ -32,7 +32,7 @@
 | --- | --- |
 | `packages/lib/src/index.tsx` | 默认导出 `ReactQuill`；模块顶层 `import './blank-blot'` 触发插件注册 |
 | `packages/lib/src/blank-blot.ts` | 从参考项目移植 blot 定义与图标注册；不 import CSS |
-| `packages/lib/src/style.css` | 注明来源版本后，粘贴 `quill/dist/quill.snow.css` 全文，再追加 blank 高亮样式 |
+| `packages/lib/src/style.css` | 通过相对路径 `@import '../node_modules/quill/dist/quill.snow.css'` 引入 snow 主题（不内嵌副本），再追加 blank 高亮样式 |
 | `packages/lib/__tests__/01-basic.spec.tsx` | 保留原 wrapper 用例，补充编辑器行为测试 |
 | `packages/lib/package.json` | 添加 `quill` 到 peerDependencies 与 devDependencies（`^2.0.3`） |
 | `packages/example/src/app.tsx` | 改为 `defaultValue` / `onChange` 受控演示 |
@@ -76,7 +76,7 @@ type ReactQuillProps = {
 
 ### 样式打包
 
-沿用现有 tsup + `@jswork/tsup-plugin-lightningcss` 配置，`src/style.css` 编译为 `dist/style.css`。把 Quill snow 样式复制进 style.css 而不是运行时 import `quill/dist/quill.snow.css`，避免打包器对 quill CSS 的处理差异；在文件头注明来源 quill 版本。
+不内嵌 Quill 样式副本。`src/index.tsx` import `./style.css`，`src/style.css` 顶部以相对路径 `@import '../node_modules/quill/dist/quill.snow.css'` 引入 snow 主题（相对路径不做 external 匹配，esbuild 打包时内联），tsup 产出单一 `dist/index.css`；包的 `./style.css` 出口指向该文件。消费者仍只需 `import '@jswork/react-quill/style.css'`。
 
 ### 依赖策略
 
@@ -89,5 +89,5 @@ type ReactQuillProps = {
 ## 验证
 
 - `pnpm install` 后 `pnpm test` 全绿
-- `pnpm build` 产出 `dist/index.mjs` / `dist/index.cjs` / `dist/index.d.ts` / `dist/style.css`，style.css 同时含 `.ql-snow` 与 `[data-tag='blank']`
+- `pnpm build` 产出 `dist/index.mjs` / `dist/index.cjs` / `dist/index.d.ts` / `dist/index.css`，index.css 同时含 `.ql-snow` 与 `[data-tag='blank']`
 - `pnpm dev` 起 example，浏览器可见 Quill 编辑器与 blank 工具栏按钮

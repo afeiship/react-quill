@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import { useEffect, useRef, ReactNode, FC, HTMLAttributes } from 'react';
 import Quill from 'quill';
+import './style.css';
 import './blank-blot';
 
 const CLASS_NAME = 'react-quill';
@@ -8,9 +9,7 @@ const CLASS_NAME = 'react-quill';
 const TOOLBAR = [
   ['bold', 'italic', 'underline', 'strike'],
   [{ color: [] }, { background: [] }],
-  [{ align: [] }],
-  ['blockquote', 'code-block'],
-  ['blank', 'clean']
+  ['blank', 'clean'],
 ];
 
 export type ReactQuillProps = {
@@ -58,7 +57,7 @@ const ReactQuill: ReactQuillComponent = ({
   useEffect(() => {
     const quill = new Quill(editorRef.current!, {
       theme: 'snow',
-      modules: { toolbar: TOOLBAR }
+      modules: { toolbar: TOOLBAR },
     });
     quillRef.current = quill;
 
