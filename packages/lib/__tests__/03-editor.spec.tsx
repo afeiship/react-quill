@@ -39,3 +39,33 @@ describe('ReactQuill editor', () => {
     expect(html).not.toContain('&nbsp;');
   });
 });
+
+describe('ReactQuill value prop', () => {
+  it('uses value as initial content on mount', () => {
+    const { container } = render(<ReactQuill value="<p>controlled content</p>" />);
+    const editor = container.querySelector('.ql-editor') as HTMLElement;
+    expect(editor.textContent).toBe('controlled content');
+  });
+
+  it('prefers value over defaultValue when both are provided', () => {
+    const { container } = render(<ReactQuill value="<p>val</p>" defaultValue="<p>def</p>" />);
+    const editor = container.querySelector('.ql-editor') as HTMLElement;
+    expect(editor.textContent).toBe('val');
+  });
+
+  it('updates editor content when value changes externally', async () => {
+    const { rerender, container } = render(<ReactQuill value="<p>first</p>" />);
+    rerender(<ReactQuill value="<p>second</p>" />);
+    const editor = container.querySelector('.ql-editor') as HTMLElement;
+    await waitFor(() => expect(editor.textContent).toBe('second'));
+  });
+
+  it('does not emit onChange when value stays the same', async () => {
+    const onChange = vi.fn();
+    const { rerender } = render(<ReactQuill value="<p>same</p>" onChange={onChange} />);
+    onChange.mockClear();
+    rerender(<ReactQuill value="<p>same</p>" onChange={onChange} />);
+    await new Promise((r) => setTimeout(r, 50));
+    expect(onChange).not.toHaveBeenCalled();
+  });
+});
