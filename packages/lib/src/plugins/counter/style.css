@@ -1,0 +1,7 @@
+/* character counter in toolbar */
+.ql-toolbar .ql-counter {
+  float: right;
+  color: #999;
+  font-size: 13px;
+  line-height: 24px;
+}

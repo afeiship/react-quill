@@ -26,6 +26,12 @@ export type ReactQuillProps = {
    */
   toolbar?: ToolbarConfig;
   /**
+   * Maximum character count shown in the toolbar counter.
+   * Set to 0 to disable the counter.
+   * @default 500
+   */
+  maxLength?: number;
+  /**
    * The children element.
    */
   children?: ReactNode;

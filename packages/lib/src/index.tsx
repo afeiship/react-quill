@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import { useEffect, useRef } from 'react';
 import Quill from 'quill';
+import { DEFAULT_MAX_LENGTH } from './plugins/counter';
 import type { ReactQuillComponent, ReactQuillProps } from './types';
 import { toHexColor } from './utils';
 import './style.css';
@@ -19,6 +20,7 @@ const ReactQuill: ReactQuillComponent = ({
   onChange,
   className,
   toolbar,
+  maxLength = DEFAULT_MAX_LENGTH,
   children,
   ...rest
 }) => {
@@ -32,7 +34,10 @@ const ReactQuill: ReactQuillComponent = ({
   useEffect(() => {
     const quill = new Quill(editorRef.current!, {
       theme: 'snow',
-      modules: { toolbar: toolbar ?? TOOLBAR },
+      modules: {
+        toolbar: toolbar ?? TOOLBAR,
+        counter: maxLength > 0 ? { maxLength } : false,
+      },
     });
     quillRef.current = quill;
 
