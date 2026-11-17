@@ -1,5 +1,6 @@
 import Quill from 'quill';
 import Inline from 'quill/blots/inline.js';
+import './style.css';
 
 // 内联 blot：输出 <span data-tag="blank">文本</span>
 // 必须继承 Quill 的 Inline（而非 Parchment.InlineBlot），否则 format 不会进入 Delta

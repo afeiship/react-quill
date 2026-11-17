@@ -3,7 +3,7 @@
  * 验证模块加载后 Quill 中已注册 blank blot 与工具栏图标
  */
 import Quill from 'quill';
-import '../src/blank-blot';
+import '../src/plugins/blank-blot';
 
 describe('blank blot', () => {
   it('registers the blank format', () => {

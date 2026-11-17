@@ -2,7 +2,7 @@ import cx from 'classnames';
 import { useEffect, useRef, ReactNode, FC, HTMLAttributes } from 'react';
 import Quill from 'quill';
 import './style.css';
-import './blank-blot';
+import './plugins';
 
 const CLASS_NAME = 'react-quill';
 

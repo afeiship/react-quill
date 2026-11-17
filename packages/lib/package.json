@@ -18,7 +18,7 @@
   "license": "MIT",
   "sideEffects": [
     "**/*.css",
-    "src/blank-blot.ts"
+    "src/plugins/**/*"
   ],
   "files": [
     "dist",
