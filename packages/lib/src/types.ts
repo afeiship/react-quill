@@ -32,6 +32,10 @@ export type ReactQuillProps = {
    */
   maxLength?: number;
   /**
+   * Placeholder text shown when the editor is empty.
+   */
+  placeholder?: string;
+  /**
    * The children element.
    */
   children?: ReactNode;

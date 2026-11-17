@@ -15,6 +15,14 @@ describe('ReactQuill editor', () => {
     expect(container.querySelector('.ql-toolbar .ql-color')).toBeInTheDocument();
   });
 
+  it('passes placeholder to the Quill editor without leaking it to the wrapper', () => {
+    const { container } = render(<ReactQuill placeholder="Type something..." />);
+    const editor = container.querySelector('.ql-editor') as HTMLElement;
+    const wrapper = container.querySelector('[data-component="react-quill"]') as HTMLElement;
+    expect(editor).toHaveAttribute('data-placeholder', 'Type something...');
+    expect(wrapper).not.toHaveAttribute('placeholder');
+  });
+
   it('renders a custom toolbar from the toolbar prop', () => {
     const { container } = render(<ReactQuill toolbar={[['italic'], ['blank', 'clean']]} />);
     expect(container.querySelector('.ql-toolbar button.ql-italic')).toBeInTheDocument();

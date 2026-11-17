@@ -21,6 +21,7 @@ const ReactQuill: ReactQuillComponent = ({
   className,
   toolbar,
   maxLength = DEFAULT_MAX_LENGTH,
+  placeholder,
   children,
   ...rest
 }) => {
@@ -34,6 +35,7 @@ const ReactQuill: ReactQuillComponent = ({
   useEffect(() => {
     const quill = new Quill(editorRef.current!, {
       theme: 'snow',
+      placeholder,
       modules: {
         toolbar: toolbar ?? TOOLBAR,
         counter: maxLength > 0 ? { maxLength } : false,
