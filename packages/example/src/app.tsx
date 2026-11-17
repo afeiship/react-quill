@@ -1,5 +1,5 @@
-import Anonymous from '@jswork/react-component-library';
-import '@jswork/react-component-library/style.css';
+import ReactQuill from '@jswork/react-quill';
+import '@jswork/react-quill/style.css';
 
 function App() {
   return (
@@ -7,9 +7,9 @@ function App() {
       <div className="badge badge-warning absolute right-0 top-0 m-4">
         Build Time: {BUILD_TIME}
       </div>
-      <Anonymous className="debug-red">
+      <ReactQuill className="debug-red">
         abc
-      </Anonymous>
+      </ReactQuill>
     </div>
   );
 }

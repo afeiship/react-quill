@@ -1,5 +1,5 @@
 {
-  "name": "@jswork/react-component-library",
+  "name": "@jswork/react-quill",
   "version": "1.0.0",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -13,7 +13,7 @@
     "./style.css": "./dist/style.css",
     "./package.json": "./package.json"
   },
-  "description": "react-component-library-description",
+  "description": "React quill.",
   "homepage": "https://js.work",
   "license": "MIT",
   "sideEffects": [

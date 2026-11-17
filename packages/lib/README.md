@@ -1,7 +1,7 @@
-# react-component-library
-> react-component-library-description
+# react-quill
+> React quill.
 
 ## installation
 ```shell
-pnpm add @jswork/react-component-library
+pnpm add @jswork/react-quill
 ```

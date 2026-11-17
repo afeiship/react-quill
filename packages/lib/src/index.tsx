@@ -1,9 +1,9 @@
 import cx from 'classnames';
 import { ReactNode, FC, HTMLAttributes } from "react";
 
-const CLASS_NAME = "react-component-library";
+const CLASS_NAME = "react-quill";
 
-export type AnonymousProps = {
+export type ReactQuillProps = {
   /**
    * The extended className for component.
    * @default ''
@@ -15,15 +15,15 @@ export type AnonymousProps = {
   children?: ReactNode;
 } & HTMLAttributes<HTMLDivElement>;
 
-type AnonymousComponent = FC<AnonymousProps> & { version?: string };
+type ReactQuillComponent = FC<ReactQuillProps> & { version?: string };
 
-const Anonymous: AnonymousComponent = ({ className, children, ...rest }) => (
+const ReactQuill: ReactQuillComponent = ({ className, children, ...rest }) => (
   <div {...rest} data-component={CLASS_NAME} className={cx(CLASS_NAME, className)}>
     {children}
   </div>
 );
 
-Anonymous.displayName = CLASS_NAME;
-Anonymous.version = __VERSION__;
+ReactQuill.displayName = CLASS_NAME;
+ReactQuill.version = __VERSION__;
 
-export default Anonymous;
+export default ReactQuill;

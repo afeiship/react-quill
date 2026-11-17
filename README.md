@@ -1,5 +1,5 @@
-# react-component-library
-> react-component-library-description
+# react-quill
+> React quill.
 
 [![version][version-image]][version-url]
 [![license][license-image]][license-url]
@@ -7,13 +7,13 @@
 
 ## installation
 ```shell
-pnpm add @jswork/react-component-library
+pnpm add @jswork/react-quill
 ```
 
 ## usage
   ```js
-  import Anonymous from '@jswork/react-component-library';
-  import '@jswork/react-component-library/style.css';
+  import ReactQuill from '@jswork/react-quill';
+  import '@jswork/react-quill/style.css';
 
   function App() {
     return (
@@ -21,9 +21,9 @@ pnpm add @jswork/react-component-library
         <div className="badge badge-warning absolute right-0 top-0 m-4">
           Build Time: {BUILD_TIME}
         </div>
-        <Anonymous className="debug-red">
+        <ReactQuill className="debug-red">
           abc
-        </Anonymous>
+        </ReactQuill>
       </div>
     );
   }
@@ -32,16 +32,16 @@ pnpm add @jswork/react-component-library
   ```
 
 ## preview
-- https://afeiship.github.io/react-component-library/
+- https://afeiship.github.io/react-quill/
 
 ## license
-Code released under [the MIT license](https://github.com/afeiship/react-component-library/blob/master/LICENSE.txt).
+Code released under [the MIT license](https://github.com/afeiship/react-quill/blob/master/LICENSE.txt).
 
-[version-image]: https://img.shields.io/npm/v/@jswork/react-component-library
-[version-url]: https://npmjs.org/package/@jswork/react-component-library
+[version-image]: https://img.shields.io/npm/v/@jswork/react-quill
+[version-url]: https://npmjs.org/package/@jswork/react-quill
 
-[license-image]: https://img.shields.io/npm/l/@jswork/react-component-library
-[license-url]: https://github.com/afeiship/react-component-library/blob/master/LICENSE.txt
+[license-image]: https://img.shields.io/npm/l/@jswork/react-quill
+[license-url]: https://github.com/afeiship/react-quill/blob/master/LICENSE.txt
 
-[download-image]: https://img.shields.io/npm/dm/@jswork/react-component-library
-[download-url]: https://www.npmjs.com/package/@jswork/react-component-library
+[download-image]: https://img.shields.io/npm/dm/@jswork/react-quill
+[download-url]: https://www.npmjs.com/package/@jswork/react-quill

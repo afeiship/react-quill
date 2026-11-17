@@ -1,7 +1,7 @@
 {
-  "name": "@jswork/react-component-library",
+  "name": "@jswork/react-quill",
   "version": "1.0.0",
-  "description": "react-component-library-description",
+  "description": "React quill.",
   "homepage": "https://js.work",
   "type": "module",
   "private": true,
@@ -11,9 +11,9 @@
   "scripts": {
     "dev": "pnpm --filter example dev",
     "docs": "node scripts/markdown.js",
-    "test": "pnpm --filter @jswork/react-component-library test",
-    "build": "pnpm run docs && pnpm --filter @jswork/react-component-library build",
-    "release": "pnpm --filter @jswork/react-component-library release"
+    "test": "pnpm --filter @jswork/react-quill test",
+    "build": "pnpm run docs && pnpm --filter @jswork/react-quill build",
+    "release": "pnpm --filter @jswork/react-quill release"
   },
   "devDependencies": {
     "@jswork/next": "^1.2.2",

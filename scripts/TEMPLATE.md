@@ -1,5 +1,5 @@
-# react-component-library
-> react-component-library-description
+# react-quill
+> React quill.
 
 [![version][version-image]][version-url]
 [![license][license-image]][license-url]
@@ -7,7 +7,7 @@
 
 ## installation
 ```shell
-pnpm add @jswork/react-component-library
+pnpm add @jswork/react-quill
 ```
 
 ## usage
@@ -16,13 +16,13 @@ __GENERATE_DAPP__
   ```
 
 ## license
-Code released under [the MIT license](https://github.com/afeiship/react-component-library/blob/main/LICENSE.txt).
+Code released under [the MIT license](https://github.com/afeiship/react-quill/blob/main/LICENSE.txt).
 
-[version-image]: https://img.shields.io/npm/v/@jswork/react-component-library
-[version-url]: https://npmjs.org/package/@jswork/react-component-library
+[version-image]: https://img.shields.io/npm/v/@jswork/react-quill
+[version-url]: https://npmjs.org/package/@jswork/react-quill
 
-[license-image]: https://img.shields.io/npm/l/@jswork/react-component-library
-[license-url]: https://github.com/afeiship/react-component-library/blob/main/LICENSE.txt
+[license-image]: https://img.shields.io/npm/l/@jswork/react-quill
+[license-url]: https://github.com/afeiship/react-quill/blob/main/LICENSE.txt
 
-[download-image]: https://img.shields.io/npm/dm/@jswork/react-component-library
-[download-url]: https://www.npmjs.com/package/@jswork/react-component-library
+[download-image]: https://img.shields.io/npm/dm/@jswork/react-quill
+[download-url]: https://www.npmjs.com/package/@jswork/react-quill
