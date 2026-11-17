@@ -16,3 +16,7 @@ package-lock.json
 # python cache
 __pycache__
 dist
+
+# claude
+.superpowers
+.worktrees
