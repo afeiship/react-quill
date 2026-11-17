@@ -1,1 +1,7 @@
 @import '../node_modules/quill/dist/quill.snow.css';
+
+/* divider between toolbar groups */
+.ql-toolbar.ql-snow .ql-formats + .ql-formats {
+  border-left: 1px solid #ccc;
+  padding-left: 15px;
+}

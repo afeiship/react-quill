@@ -1,6 +1,8 @@
 import cx from 'classnames';
-import { useEffect, useRef, ReactNode, FC, HTMLAttributes } from 'react';
+import { useEffect, useRef } from 'react';
 import Quill from 'quill';
+import type { ReactQuillComponent, ReactQuillProps } from './types';
+import { toHexColor } from './utils';
 import './style.css';
 import './plugins';
 
@@ -9,41 +11,14 @@ const CLASS_NAME = 'react-quill';
 const TOOLBAR = [
   ['bold', 'italic', 'underline', 'strike'],
   [{ color: [] }, { background: [] }],
-  ['blank', 'clean'],
 ];
-
-export type ReactQuillProps = {
-  /**
-   * Initial HTML content. Applied once on mount.
-   */
-  defaultValue?: string;
-  /**
-   * Controlled HTML content. When it differs from the editor's current
-   * content, the editor content is replaced.
-   */
-  value?: string;
-  /**
-   * Called with semantic HTML whenever the editor content changes.
-   */
-  onChange?: (html: string) => void;
-  /**
-   * The extended className for component.
-   * @default ''
-   */
-  className?: string;
-  /**
-   * The children element.
-   */
-  children?: ReactNode;
-} & Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>;
-
-type ReactQuillComponent = FC<ReactQuillProps> & { version?: string };
 
 const ReactQuill: ReactQuillComponent = ({
   defaultValue,
   value,
   onChange,
   className,
+  toolbar,
   children,
   ...rest
 }) => {
@@ -57,18 +32,20 @@ const ReactQuill: ReactQuillComponent = ({
   useEffect(() => {
     const quill = new Quill(editorRef.current!, {
       theme: 'snow',
-      modules: { toolbar: TOOLBAR },
+      modules: { toolbar: toolbar ?? TOOLBAR },
     });
     quillRef.current = quill;
 
-    // value 优先于 defaultValue 作为初始内容
+    // value takes precedence over defaultValue as initial content
     const initial = value !== undefined ? value : defaultValue;
     if (initial) quill.clipboard.dangerouslyPasteHTML(initial);
 
     quill.on('text-change', () => {
-      // Quill 用 &nbsp; 保护 contenteditable 中的空格，这里还原成普通空格以便外部使用
-      const html = quill.getSemanticHTML().replace(/&nbsp;/g, ' ');
-      // 记录最近一次产出的 HTML，外部回传相同 value 时跳过粘贴，避免打断输入
+      // Quill guards spaces with &nbsp; in contenteditable; restore plain
+      // spaces for external use
+      const html = toHexColor(quill.getSemanticHTML().replace(/&nbsp;/g, ' '));
+      // Track the last emitted html so re-feeding the same value skips the
+      // paste and avoids interrupting typing
       lastHtmlRef.current = html;
       onChangeRef.current?.(html);
     });
@@ -77,11 +54,13 @@ const ReactQuill: ReactQuillComponent = ({
       quill.off('text-change');
       quillRef.current = null;
     };
-    // 初始化时应用一次初始内容，后续更新由 value 同步 effect 处理
+    // Apply initial content once on mount; later updates go through the
+    // value sync effect
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 同步外部 value 变化到编辑器；首帧跳过（挂载时已应用 value）
+  // Sync external value changes into the editor; skip the first frame
+  // (value is applied on mount)
   useEffect(() => {
     if (!mountedRef.current) {
       mountedRef.current = true;
@@ -103,4 +82,5 @@ const ReactQuill: ReactQuillComponent = ({
 ReactQuill.displayName = CLASS_NAME;
 ReactQuill.version = __VERSION__;
 
+export type { ReactQuillProps };
 export default ReactQuill;

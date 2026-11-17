@@ -7,12 +7,20 @@ import '@testing-library/jest-dom';
 import ReactQuill from '../src';
 
 describe('ReactQuill editor', () => {
-  it('mounts a Quill snow editor with the blank toolbar button', () => {
+  it('mounts a Quill snow editor with the default toolbar', () => {
     const { container } = render(<ReactQuill />);
     expect(container.querySelector('.ql-container.ql-snow')).toBeInTheDocument();
     expect(container.querySelector('.ql-editor')).toBeInTheDocument();
+    expect(container.querySelector('.ql-toolbar button.ql-bold')).toBeInTheDocument();
+    expect(container.querySelector('.ql-toolbar .ql-color')).toBeInTheDocument();
+  });
+
+  it('renders a custom toolbar from the toolbar prop', () => {
+    const { container } = render(<ReactQuill toolbar={[['italic'], ['blank', 'clean']]} />);
+    expect(container.querySelector('.ql-toolbar button.ql-italic')).toBeInTheDocument();
     expect(container.querySelector('.ql-toolbar button.ql-blank')).toBeInTheDocument();
     expect(container.querySelector('.ql-toolbar button.ql-clean')).toBeInTheDocument();
+    expect(container.querySelector('.ql-toolbar button.ql-bold')).not.toBeInTheDocument();
   });
 
   it('applies defaultValue html on mount', () => {
@@ -37,6 +45,26 @@ describe('ReactQuill editor', () => {
     const html = onChange.mock.lastCall?.[0] as string;
     expect(html).toContain('after');
     expect(html).not.toContain('&nbsp;');
+  });
+
+  it('outputs hex colors instead of rgb() in onChange html', async () => {
+    const onChange = vi.fn();
+    const { container } = render(
+      <ReactQuill
+        defaultValue="<p><span style='color: #ff5500'>colored</span></p>"
+        onChange={onChange}
+      />
+    );
+    onChange.mockClear();
+
+    const editor = container.querySelector('.ql-editor') as HTMLElement;
+    const span = editor.querySelector('span') as HTMLElement;
+    span.textContent = 'changed';
+
+    await waitFor(() => expect(onChange).toHaveBeenCalled());
+    const html = onChange.mock.lastCall?.[0] as string;
+    expect(html).toContain('color: #ff5500');
+    expect(html).not.toContain('rgb(');
   });
 });
 
