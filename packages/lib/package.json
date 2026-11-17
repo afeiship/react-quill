@@ -17,7 +17,8 @@
   "homepage": "https://js.work",
   "license": "MIT",
   "sideEffects": [
-    "**/*.css"
+    "**/*.css",
+    "src/blank-blot.ts"
   ],
   "files": [
     "dist",
