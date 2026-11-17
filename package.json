@@ -1,0 +1,23 @@
+{
+  "name": "@jswork/react-component-library",
+  "version": "1.0.0",
+  "description": "react-component-library-description",
+  "homepage": "https://js.work",
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "pnpm --filter example dev",
+    "docs": "node scripts/markdown.js",
+    "test": "pnpm --filter @jswork/react-component-library test",
+    "build": "pnpm run docs && pnpm --filter @jswork/react-component-library build",
+    "release": "pnpm --filter @jswork/react-component-library release"
+  },
+  "devDependencies": {
+    "@jswork/next": "^1.2.2",
+    "@jswork/next-replace-in-file": "^1.0.0",
+    "indent-string": "^5.0.0"
+  }
+}
