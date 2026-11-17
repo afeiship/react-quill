@@ -60,12 +60,25 @@ describe('ReactQuill value prop', () => {
     await waitFor(() => expect(editor.textContent).toBe('second'));
   });
 
-  it('does not emit onChange when value stays the same', async () => {
+  it('does not re-apply when value matches the emitted html', async () => {
     const onChange = vi.fn();
-    const { rerender } = render(<ReactQuill value="<p>same</p>" onChange={onChange} />);
+    const { container, rerender } = render(
+      <ReactQuill defaultValue="<p>before</p>" onChange={onChange} />
+    );
+
+    const editor = container.querySelector('.ql-editor') as HTMLElement;
+    const paragraph = editor.querySelector('p') as HTMLElement;
+    paragraph.textContent = 'after';
+    await waitFor(() => expect(onChange).toHaveBeenCalled());
+    const emitted = onChange.mock.lastCall?.[0] as string;
+    expect(emitted).toContain('after');
+
+    // Feed the emitted html back as the controlled value: guard must skip the paste
     onChange.mockClear();
-    rerender(<ReactQuill value="<p>same</p>" onChange={onChange} />);
+    rerender(<ReactQuill value={emitted} onChange={onChange} />);
     await new Promise((r) => setTimeout(r, 50));
+
     expect(onChange).not.toHaveBeenCalled();
+    expect(editor.textContent).toBe('after');
   });
 });
