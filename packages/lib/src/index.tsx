@@ -31,7 +31,7 @@ export type ReactQuillProps = {
    * The children element.
    */
   children?: ReactNode;
-} & HTMLAttributes<HTMLDivElement>;
+} & Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>;
 
 type ReactQuillComponent = FC<ReactQuillProps> & { version?: string };
 
