@@ -12,6 +12,7 @@ const CLASS_NAME = 'react-quill';
 const TOOLBAR = [
   ['bold', 'italic', 'underline', 'strike'],
   [{ color: [] }, { background: [] }],
+  [{ align: [] }],
 ];
 
 const ReactQuill: ReactQuillComponent = ({
